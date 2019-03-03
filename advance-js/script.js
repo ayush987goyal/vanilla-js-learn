@@ -22,6 +22,8 @@ console.log(john.lastName);
 console.log(jane.lastName);
 */
 
+/************************************************************************************************ */
+
 // Object.Create
 /*
 var personProto = {
@@ -42,9 +44,12 @@ var jane = Object.create(personProto, {
 });
 */
 
+/************************************************************************************************ */
+
 // Functions
 
 // Passing func as arguments
+/*
 var years = [1990, 1965, 1937, 2011, 1998];
 
 function arrayCalc(arr, fn) {
@@ -67,3 +72,33 @@ var ages = arrayCalc(years, calcAge);
 var fullAges = arrayCalc(ages, isFullAge);
 console.log(ages);
 console.log(fullAges);
+*/
+
+/************************************************************************************************ */
+
+// Function returning functions
+/*
+function interviewQuestion(job) {
+  if (job === 'designer') {
+    return function(name) {
+      console.log(name + ', can you please explain what UX design is?');
+    };
+  } else if (job === 'teacher') {
+    return name => {
+      console.log('What subject do you teach ' + name + '?');
+    };
+  } else {
+    return name => {
+      console.log('Hello! ' + name);
+    };
+  }
+}
+
+var teacherQuestion = interviewQuestion('teacher');
+var designerQuestion = interviewQuestion('designer');
+
+teacherQuestion('John');
+designerQuestion('Jane');
+*/
+
+/************************************************************************************************ */
