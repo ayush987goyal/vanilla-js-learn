@@ -46,7 +46,9 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 
   document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
-  if (scores[activePlayer] >= 20) {
+  var winningScore = document.querySelector('.final-score').value || 100;
+
+  if (scores[activePlayer] >= winningScore) {
     gamePlaying = false;
 
     document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
