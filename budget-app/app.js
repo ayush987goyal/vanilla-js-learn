@@ -48,14 +48,17 @@ var budgetController = (function() {
       }
 
       data.allItems[type].push(newItem);
-      data.total[type] += val;
 
       return newItem;
     },
 
+    deleteItem: function(type, id) {
+      data.allItems[type] = data.allItems[type].filter(item => item.id === id);
+    },
+
     calculateBudget: function() {
       calculateTotal('exp');
-      calculateTotal('exp');
+      calculateTotal('inc');
 
       data.budget = data.total.inc - data.total.exp;
       data.percentage =
@@ -85,7 +88,8 @@ var UIController = (function() {
     budgetLabel: '.budget__value',
     incomeLabel: '.budget__income--value',
     expensesLabel: '.budget__expenses--value',
-    percentageLabel: '.budget__expenses--percentage'
+    percentageLabel: '.budget__expenses--percentage',
+    container: '.container'
   };
 
   return {
@@ -104,7 +108,7 @@ var UIController = (function() {
         element = domStrings.incomeContainer;
 
         html = `
-          <div class="item clearfix" id="income-%id%">
+          <div class="item clearfix" id="inc-%id%">
             <div class="item__description">%description%</div>
             <div class="right clearfix">
                 <div class="item__value">%value%</div>
@@ -118,7 +122,7 @@ var UIController = (function() {
         element = domStrings.expenseContainer;
 
         html = `
-          <div class="item clearfix" id="expense-%id%">
+          <div class="item clearfix" id="exp-%id%">
             <div class="item__description">%description%</div>
             <div class="right clearfix">
                 <div class="item__value">%value%</div>
@@ -180,6 +184,8 @@ var controller = (function(budgetCtrl, UICtrl) {
         ctrlAddItem();
       }
     });
+
+    document.querySelector(domStrings.container).addEventListener('click', ctrlDeleteItem);
   };
 
   var updateBudget = function() {
@@ -200,6 +206,20 @@ var controller = (function(budgetCtrl, UICtrl) {
     newItem = budgetController.addItem(input.type, input.description, input.value);
     UICtrl.addListItem(newItem, input.type);
     UICtrl.clearFields();
+
+    updateBudget();
+  };
+
+  var ctrlDeleteItem = function(event) {
+    var itemId, splitId, type, ID;
+    itemId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (!itemId) return;
+
+    splitId = itemId.split('-');
+    type = splitId[0];
+    ID = +splitId[1];
+    budgetController.deleteItem(type, ID);
 
     updateBudget();
   };
