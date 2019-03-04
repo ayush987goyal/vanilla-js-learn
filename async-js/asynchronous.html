@@ -38,6 +38,7 @@
       getRecipe();
       */
 
+      /*
       const getIDs = new Promise((resolve, reject) => {
         setTimeout(() => {
           const recipeIDs = [253, 21, 53, 84];
@@ -70,6 +71,7 @@
           );
         });
       };
+      */
 
       /*
         getIDs
@@ -89,6 +91,7 @@
           });
           */
 
+      /*
       async function getRecipeAW() {
         const ids = await getIDs;
         console.log(ids);
@@ -102,6 +105,12 @@
         return related;
       }
       getRecipeAW().then(rec => console.log(rec));
+    */
+
+      fetch('https://crossorigin.me/https://www.metaweather.com/api/location/2487956/')
+        .then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
     </script>
   </body>
 </html>
