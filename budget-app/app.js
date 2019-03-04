@@ -53,7 +53,7 @@ var budgetController = (function() {
     },
 
     deleteItem: function(type, id) {
-      data.allItems[type] = data.allItems[type].filter(item => item.id === id);
+      data.allItems[type] = data.allItems[type].filter(item => item.id !== id);
     },
 
     calculateBudget: function() {
@@ -142,6 +142,11 @@ var UIController = (function() {
       document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
     },
 
+    deleteListItem: function(selectorId) {
+      var el = document.getElementById(selectorId);
+      el.parentNode.removeChild(el);
+    },
+
     clearFields: function() {
       var fields, fieldsArr;
 
@@ -203,7 +208,7 @@ var controller = (function(budgetCtrl, UICtrl) {
 
     if (!input.description || Number.isNaN(input.value) || input.value === 0) return;
 
-    newItem = budgetController.addItem(input.type, input.description, input.value);
+    newItem = budgetCtrl.addItem(input.type, input.description, input.value);
     UICtrl.addListItem(newItem, input.type);
     UICtrl.clearFields();
 
@@ -219,7 +224,9 @@ var controller = (function(budgetCtrl, UICtrl) {
     splitId = itemId.split('-');
     type = splitId[0];
     ID = +splitId[1];
-    budgetController.deleteItem(type, ID);
+
+    budgetCtrl.deleteItem(type, ID);
+    UICtrl.deleteListItem(itemId);
 
     updateBudget();
   };
