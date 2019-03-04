@@ -9,7 +9,7 @@
   <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
-      /*
+      /* callback
       function getRecipe() {
         setTimeout(() => {
           const recipeId = [253, 21, 53, 84];
@@ -71,21 +71,37 @@
         });
       };
 
-      getIDs
-        .then(ids => {
-          console.log(ids);
-          return getRecipe(ids[2]);
-        })
-        .then(recipe => {
-          console.log(recipe);
-          return getRelated(recipe.publisher);
-        })
-        .then(recipe => {
-          console.log(recipe);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      /*
+        getIDs
+          .then(ids => {
+            console.log(ids);
+            return getRecipe(ids[2]);
+          })
+          .then(recipe => {
+            console.log(recipe);
+            return getRelated(recipe.publisher);
+          })
+          .then(recipe => {
+            console.log(recipe);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+          */
+
+      async function getRecipeAW() {
+        const ids = await getIDs;
+        console.log(ids);
+
+        const recipe = await getRecipe(ids[2]);
+        console.log(recipe);
+
+        const related = await getRelated(recipe.publisher);
+        console.log(related);
+
+        return related;
+      }
+      getRecipeAW().then(rec => console.log(rec));
     </script>
   </body>
 </html>
