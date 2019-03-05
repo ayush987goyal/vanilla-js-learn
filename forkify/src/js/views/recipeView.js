@@ -8,6 +8,7 @@ export const clearRecipe = () => {
 
 const formatCount = count => {
   if (count) {
+    count = Math.round(count * 10000) / 10000;
     const [int, dec] = count
       .toString()
       .split('.')
