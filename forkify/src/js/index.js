@@ -63,6 +63,8 @@ const controlRecipe = async () => {
     recipeView.clearRecipe();
     renderLoader(elements.recipe);
 
+    state.search && searchView.highlightSelected(id);
+
     try {
       await state.recipe.getRecipe();
       state.recipe.calcTime();
